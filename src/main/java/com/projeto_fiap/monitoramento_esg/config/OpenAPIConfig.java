@@ -14,7 +14,7 @@ public class OpenAPIConfig {
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
                 .info(new Info()
-                        .title("ESG Energy Monitoring API")
+                        .title("API ESG de Monitoramento de Consumo de Energia")
                         .description("""
                         API REST para monitoramento de sensores de consumo energético e alertas de consumo excessivo.
 
