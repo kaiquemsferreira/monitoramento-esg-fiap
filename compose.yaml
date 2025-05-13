@@ -1,7 +1,16 @@
+version: "3.8"
+
 services:
   oracle:
-    image: 'gvenzl/oracle-free:latest'
-    environment:
-      - 'ORACLE_PASSWORD=secret'
+    image: gvenzl/oracle-xe:21
+    container_name: oracle-db
     ports:
-      - '1521'
+      - "1521:1521"
+    environment:
+      ORACLE_PASSWORD: admin
+      ORACLE_DATABASE: esgdb
+    volumes:
+      - oracle_data:/opt/oracle/oradata
+
+volumes:
+  oracle_data:
