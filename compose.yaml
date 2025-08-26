@@ -1,16 +1,22 @@
 version: "3.8"
 
 services:
-  oracle:
-    image: gvenzl/oracle-xe:21
-    container_name: oracle-db
+  mongo:
+    image: mongodb/mongodb-community-server:7.0-ubuntu2204
+    container_name: mongo-db
     ports:
-      - "1521:1521"
+      - "27017:27017"
     environment:
-      ORACLE_PASSWORD: admin
-      ORACLE_DATABASE: esgdb
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: rootpass
+      MONGO_INITDB_DATABASE: esg
     volumes:
-      - oracle_data:/opt/oracle/oradata
+      - mongo_data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "mongodb://root:rootpass@localhost:27017/admin", "--eval", "db.runCommand({ ping: 1 })"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
 volumes:
-  oracle_data:
+  mongo_data:
