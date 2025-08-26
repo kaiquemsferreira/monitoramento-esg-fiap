@@ -10,6 +10,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
+import java.util.Date;
+
 import static com.projeto_fiap.monitoramento_esg.constants.MensagensConstantes.ALERT_NOT_FOUND_WITH_ID;
 
 @Service
@@ -55,7 +58,7 @@ public class AlertService {
     public AlertDTO resolve(String id) {
         AlertDTO a = this.get(id);
         a.setStatus("resolved");
-        a.setResolvedAt(java.time.Instant.now());
+        a.setResolvedAt(Date.from(Instant.now()));
         Alert alert = this.alertMapper.convertAlertDTOToAlert(a);
         Alert savedAlert = this.alertRepository.save(alert);
         return this.alertMapper.convertAlertToAlertDTO(savedAlert);

@@ -8,7 +8,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.Instant;
+import java.util.Date;
 import java.util.List;
 
 @Data @Builder
@@ -21,7 +21,7 @@ public class AlertDTO {
     private Threshold threshold;
     private Period period;
     private String status;
-    private Instant createdAt;
-    private Instant resolvedAt;
+    private Date createdAt;
+    private Date resolvedAt;
     private List<Action> actions;
 }

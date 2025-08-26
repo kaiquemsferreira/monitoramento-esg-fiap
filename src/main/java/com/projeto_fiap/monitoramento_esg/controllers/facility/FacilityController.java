@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/facilities")
+@RequestMapping("/api/facility")
 public class FacilityController {
     private final FacilityService facilityService;
 

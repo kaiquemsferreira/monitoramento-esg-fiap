@@ -4,7 +4,7 @@ import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.time.Instant;
+import java.util.Date;
 import java.util.List;
 
 @Data @Builder
@@ -19,7 +19,7 @@ public class Alert {
     private Threshold threshold;
     private Period period;
     private String status;
-    private Instant createdAt;
-    private Instant resolvedAt;
+    private Date createdAt;
+    private Date resolvedAt;
     private List<Action> actions;
 }

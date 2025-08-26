@@ -5,6 +5,7 @@ import com.projeto_fiap.monitoramento_esg.models.entity.alert.Alert;
 import org.springframework.stereotype.Component;
 
 import java.time.Instant;
+import java.util.Date;
 
 @Component
 public class AlertMapper {
@@ -35,8 +36,8 @@ public class AlertMapper {
                 .threshold(dto.getThreshold())
                 .period(dto.getPeriod())
                 .status(dto.getStatus())
-                .createdAt(dto.getCreatedAt() != null ? dto.getCreatedAt() : Instant.now())
-                .resolvedAt(Instant.now())
+                .createdAt(dto.getCreatedAt() != null ? dto.getCreatedAt() : Date.from(Instant.now()))
+                .resolvedAt(Date.from(Instant.now()))
                 .actions(dto.getActions())
                 .build();
     }
