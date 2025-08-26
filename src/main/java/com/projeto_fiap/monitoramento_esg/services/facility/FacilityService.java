@@ -1,6 +1,7 @@
 package com.projeto_fiap.monitoramento_esg.services.facility;
 
-import com.projeto_fiap.monitoramento_esg.mappers.FacilityMapper;
+import com.projeto_fiap.monitoramento_esg.exceptions.FacilityNotFoundException;
+import com.projeto_fiap.monitoramento_esg.mappers.facility.FacilityMapper;
 import com.projeto_fiap.monitoramento_esg.models.dto.facility.FacilityDTO;
 import com.projeto_fiap.monitoramento_esg.models.entity.facility.Facility;
 import com.projeto_fiap.monitoramento_esg.repository.facility.FacilityRepository;
@@ -8,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import static com.projeto_fiap.monitoramento_esg.constants.MensagensConstantes.FACILITY_NOT_FOUND_WITH_ID;
 
 @Service
 @RequiredArgsConstructor
@@ -21,8 +24,9 @@ public class FacilityService {
     }
 
     public FacilityDTO get(String id) {
-        Facility facility = this.facilityRepository.findById(id).orElseThrow();
-        return this.facilityMapper.convertFacilityToFacilityDTO(facility);
+        return this.facilityRepository.findById(id)
+                .map(facilityMapper::convertFacilityToFacilityDTO)
+                .orElseThrow(() -> new FacilityNotFoundException(FACILITY_NOT_FOUND_WITH_ID + id));
     }
 
     public FacilityDTO create(FacilityDTO input) {

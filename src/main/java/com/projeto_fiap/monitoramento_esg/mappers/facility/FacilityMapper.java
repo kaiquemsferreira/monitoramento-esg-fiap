@@ -1,4 +1,4 @@
-package com.projeto_fiap.monitoramento_esg.mappers;
+package com.projeto_fiap.monitoramento_esg.mappers.facility;
 
 import com.projeto_fiap.monitoramento_esg.models.dto.facility.FacilityDTO;
 import com.projeto_fiap.monitoramento_esg.models.entity.facility.Facility;
