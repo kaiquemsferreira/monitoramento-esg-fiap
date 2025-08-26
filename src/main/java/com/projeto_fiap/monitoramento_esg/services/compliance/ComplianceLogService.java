@@ -36,7 +36,7 @@ public class ComplianceLogService {
         if (!ands.isEmpty()) {
             q.addCriteria(new Criteria().andOperator(ands.toArray(new Criteria[0])));
         }
-        q.with(pageable); // paginação + ordenação vindas do Pageable
+        q.with(pageable);
 
         long total = mongoTemplate.count(q, ComplianceLog.class);
         List<ComplianceLogDTO> content = mongoTemplate.find(q, ComplianceLog.class)
