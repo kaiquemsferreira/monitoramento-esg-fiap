@@ -3,6 +3,8 @@ package com.projeto_fiap.monitoramento_esg.models.entity.alert;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
+import org.springframework.data.mongodb.core.mapping.FieldType;
 
 import java.util.Date;
 import java.util.List;
@@ -15,6 +17,7 @@ public class Alert {
     private String id;
     private String type;
     private String level;
+    @Field(targetType = FieldType.OBJECT_ID)
     private String sensorId;
     private Threshold threshold;
     private Period period;
