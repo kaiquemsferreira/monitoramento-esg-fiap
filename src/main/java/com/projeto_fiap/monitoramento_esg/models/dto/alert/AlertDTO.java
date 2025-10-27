@@ -18,6 +18,7 @@ public class AlertDTO {
     private String type;
     private String level;
     private String sensorId;
+    private String message;
     private Threshold threshold;
     private Period period;
     private String status;

@@ -5,11 +5,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
-
 @Data @Builder
 @NoArgsConstructor @AllArgsConstructor
 public class Action {
-    private Date at;
-    private String note;
+    private String type;
+    private String target;
 }
