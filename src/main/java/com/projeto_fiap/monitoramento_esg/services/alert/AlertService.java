@@ -52,16 +52,22 @@ public class AlertService {
         return this.alertMapper.toDto(saved);
     }
 
-    public AlertDTO update(String id, AlertDTO input) {
+    public AlertDTO update(String id, AlertDTO in) {
         var oid = ObjectIdUtil.parseOrNull(id);
-
-        var existing = this.alertRepository.findById(oid)
+        var cur = alertRepository.findById(oid)
                 .orElseThrow(() -> new AlertNotFoundException("Alerta não encontrado: " + id));
 
-        input.setId(id);
-        if (input.getCreatedAt() == null) input.setCreatedAt(existing.getCreatedAt());
-        var saved = this.alertRepository.save(this.alertMapper.toEntity(input));
-        return this.alertMapper.toDto(saved);
+        if (in.getType() != null)      cur.setType(in.getType());
+        if (in.getLevel() != null)     cur.setLevel(in.getLevel());
+        if (in.getSensorId() != null)  cur.setSensorId(ObjectIdUtil.parseOrNull(in.getSensorId()));
+        if (in.getMessage() != null)   cur.setMessage(in.getMessage());
+        if (in.getThreshold() != null) cur.setThreshold(in.getThreshold());
+        if (in.getPeriod() != null)    cur.setPeriod(in.getPeriod());
+        if (in.getStatus() != null)    cur.setStatus(in.getStatus());
+        if (in.getResolvedAt() != null) cur.setResolvedAt(in.getResolvedAt());
+        if (in.getActions() != null)   cur.setActions(in.getActions());
+
+        return alertMapper.toDto(alertRepository.save(cur));
     }
 
     public AlertDTO resolve(String id) {

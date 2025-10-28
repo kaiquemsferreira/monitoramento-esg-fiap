@@ -1,6 +1,5 @@
 package com.projeto_fiap.monitoramento_esg.models.entity.facility;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,7 +13,6 @@ public class Address {
     private String street;
     private String zip;
 
-    @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
     public static Address fromString(String raw) {
         Address a = new Address();
         if (raw != null) {

@@ -46,19 +46,21 @@ public class SensorService {
         return this.sensorMapper.toDto(saved);
     }
 
-    public SensorDTO update(String id, SensorDTO input) {
+    public SensorDTO update(String id, SensorDTO in) {
         var oid = ObjectIdUtil.parseOrNull(id);
-        if (oid == null) {
-            throw new SensorNotFoundException(SENSOR_NOT_FOUND_WITH_ID + id);
-        }
-        Sensor current = this.sensorRepository.findById(oid)
+        if (oid == null) throw new SensorNotFoundException(SENSOR_NOT_FOUND_WITH_ID + id);
+
+        var cur = sensorRepository.findById(oid)
                 .orElseThrow(() -> new SensorNotFoundException(SENSOR_NOT_FOUND_WITH_ID + id));
 
-        input.setId(id);
-        Sensor toSave = this.sensorMapper.toEntity(input);
-        toSave.setId(current.getId());
-        Sensor saved = this.sensorRepository.save(toSave);
-        return this.sensorMapper.toDto(saved);
+        if (in.getName() != null)       cur.setName(in.getName());
+        if (in.getType() != null)       cur.setType(in.getType());
+        if (in.getFacilityId() != null) cur.setFacilityId(ObjectIdUtil.parseOrNull(in.getFacilityId()));
+        if (in.getActive() != null)     cur.setActive(in.getActive());
+        if (in.getTags() != null)       cur.setTags(in.getTags());
+        if (in.getSpecs() != null)      cur.setSpecs(in.getSpecs());
+
+        return sensorMapper.toDto(sensorRepository.save(cur));
     }
 
     public void delete(String id) {
