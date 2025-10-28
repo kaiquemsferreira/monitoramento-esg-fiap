@@ -2,7 +2,6 @@ package com.projeto_fiap.monitoramento_esg.controllers.facility;
 
 import com.projeto_fiap.monitoramento_esg.models.dto.facility.FacilityDTO;
 import com.projeto_fiap.monitoramento_esg.services.facility.FacilityService;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -32,7 +31,7 @@ public class FacilityController {
     }
 
     @PutMapping("/{id}")
-    public FacilityDTO update(@PathVariable String id, @RequestBody @Valid FacilityDTO input) {
+    public FacilityDTO update(@PathVariable String id, @RequestBody FacilityDTO input) {
         return this.facilityService.update(id, input);
     }
 

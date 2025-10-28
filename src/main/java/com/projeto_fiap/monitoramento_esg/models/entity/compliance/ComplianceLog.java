@@ -17,7 +17,7 @@ import java.util.List;
 public class ComplianceLog {
     @Id
     private ObjectId id;
-    private ObjectId userId;
+    private String userId;
     private String action;
     private String entity;
     private String entityId;

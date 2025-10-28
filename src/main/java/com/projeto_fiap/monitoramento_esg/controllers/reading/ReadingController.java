@@ -2,13 +2,13 @@ package com.projeto_fiap.monitoramento_esg.controllers.reading;
 
 import com.projeto_fiap.monitoramento_esg.models.dto.reading.ReadingDTO;
 import com.projeto_fiap.monitoramento_esg.services.reading.ReadingService;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.Instant;
@@ -36,13 +36,12 @@ public class ReadingController {
     }
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public ReadingDTO create(@Valid @RequestBody ReadingDTO body) {
-        return this.readingService.create(body);
+    public ResponseEntity<ReadingDTO> create(@RequestBody ReadingDTO body) {
+        return ResponseEntity.ok(this.readingService.create(body));
     }
 
     @PutMapping("/{id}")
-    public ReadingDTO update(@PathVariable String id, @Valid @RequestBody ReadingDTO body) {
+    public ReadingDTO update(@PathVariable String id, @RequestBody ReadingDTO body) {
         return this.readingService.update(id, body);
     }
 

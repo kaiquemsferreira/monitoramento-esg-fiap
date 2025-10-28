@@ -1,8 +1,10 @@
 package com.projeto_fiap.monitoramento_esg.models.dto.alert;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.projeto_fiap.monitoramento_esg.models.entity.alert.Action;
 import com.projeto_fiap.monitoramento_esg.models.entity.alert.Period;
 import com.projeto_fiap.monitoramento_esg.models.entity.alert.Threshold;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

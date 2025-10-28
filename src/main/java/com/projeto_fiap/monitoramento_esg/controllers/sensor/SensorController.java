@@ -2,7 +2,6 @@ package com.projeto_fiap.monitoramento_esg.controllers.sensor;
 
 import com.projeto_fiap.monitoramento_esg.models.dto.sensor.SensorDTO;
 import com.projeto_fiap.monitoramento_esg.services.sensor.SensorService;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -32,14 +31,13 @@ public class SensorController {
         return ResponseEntity.ok(this.sensorService.get(id));
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<SensorDTO> create(@Valid @RequestBody SensorDTO req) {
-        SensorDTO salvo = this.sensorService.create(req);
-        return ResponseEntity.status(HttpStatus.CREATED).body(salvo);
+    @PostMapping
+    public ResponseEntity<SensorDTO> create(@RequestBody SensorDTO dto) {
+        return ResponseEntity.ok(this.sensorService.create(dto));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<SensorDTO> update(@PathVariable String id, @Valid @RequestBody SensorDTO req) {
+    public ResponseEntity<SensorDTO> update(@PathVariable String id, @RequestBody SensorDTO req) {
         SensorDTO sensor = this.sensorService.update(id, req);
         return ResponseEntity.status(HttpStatus.OK).body(sensor);
     }

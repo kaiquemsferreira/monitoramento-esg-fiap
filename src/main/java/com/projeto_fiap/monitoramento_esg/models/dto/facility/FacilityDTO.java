@@ -1,5 +1,6 @@
 package com.projeto_fiap.monitoramento_esg.models.dto.facility;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.projeto_fiap.monitoramento_esg.models.entity.facility.Address;
 import com.projeto_fiap.monitoramento_esg.models.entity.facility.Contact;
 import com.projeto_fiap.monitoramento_esg.models.entity.facility.EsgGoals;
@@ -13,6 +14,7 @@ import java.util.List;
 
 @Data @Builder
 @NoArgsConstructor @AllArgsConstructor
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class FacilityDTO {
     private String id;
     private String name;

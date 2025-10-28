@@ -1,7 +1,6 @@
 package com.projeto_fiap.monitoramento_esg.config;
 
-import com.projeto_fiap.monitoramento_esg.exceptions.AlertNotFoundException;
-import com.projeto_fiap.monitoramento_esg.exceptions.SensorNotFoundException;
+import com.projeto_fiap.monitoramento_esg.exceptions.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -31,5 +30,30 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(AlertNotFoundException.class)
     public Map<String, Object> handleAlertNotFound(AlertNotFoundException ex) {
         return Map.of("error", "Not Found", "message", ex.getMessage());
+    }
+
+    @ExceptionHandler(FacilityNotFoundException.class)
+    public ResponseEntity<String> handleFacilityNotFound(FacilityNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(ReadingNotFoundException.class)
+    public ResponseEntity<String> handleReadingNotFound(ReadingNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(ComplianceLogNotFoundException.class)
+    public ResponseEntity<String> handleComplianceNotFound(ComplianceLogNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(org.springframework.dao.DataIntegrityViolationException.class)
+    public ResponseEntity<String> handleDataIntegrity(org.springframework.dao.DataIntegrityViolationException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Violação de integridade/validação de dados.");
+    }
+
+    @ExceptionHandler(jakarta.validation.ConstraintViolationException.class)
+    public ResponseEntity<String> handleConstraint(jakarta.validation.ConstraintViolationException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Payload inválido.");
     }
 }

@@ -29,7 +29,11 @@ public class SensorService {
     }
 
     public SensorDTO get(String id) {
-        return this.sensorRepository.findById(ObjectIdUtil.parseOrNull(id))
+        var oid = ObjectIdUtil.parseOrNull(id);
+        if (oid == null) {
+            throw new SensorNotFoundException(SENSOR_NOT_FOUND_WITH_ID + id);
+        }
+        return this.sensorRepository.findById(oid)
                 .map(this.sensorMapper::toDto)
                 .orElseThrow(() -> new SensorNotFoundException(SENSOR_NOT_FOUND_WITH_ID + id));
     }
@@ -43,13 +47,28 @@ public class SensorService {
     }
 
     public SensorDTO update(String id, SensorDTO input) {
+        var oid = ObjectIdUtil.parseOrNull(id);
+        if (oid == null) {
+            throw new SensorNotFoundException(SENSOR_NOT_FOUND_WITH_ID + id);
+        }
+        Sensor current = this.sensorRepository.findById(oid)
+                .orElseThrow(() -> new SensorNotFoundException(SENSOR_NOT_FOUND_WITH_ID + id));
+
         input.setId(id);
-        Sensor sensor = this.sensorMapper.toEntity(input);
-        Sensor savedSensor = this.sensorRepository.save(sensor);
-        return this.sensorMapper.toDto(savedSensor);
+        Sensor toSave = this.sensorMapper.toEntity(input);
+        toSave.setId(current.getId());
+        Sensor saved = this.sensorRepository.save(toSave);
+        return this.sensorMapper.toDto(saved);
     }
 
     public void delete(String id) {
-        this.sensorRepository.deleteById(ObjectIdUtil.parseOrNull(id));
+        var oid = ObjectIdUtil.parseOrNull(id);
+        if (oid == null) {
+            throw new SensorNotFoundException(SENSOR_NOT_FOUND_WITH_ID + id);
+        }
+        if (!this.sensorRepository.existsById(oid)) {
+            throw new SensorNotFoundException(SENSOR_NOT_FOUND_WITH_ID + id);
+        }
+        this.sensorRepository.deleteById(oid);
     }
 }

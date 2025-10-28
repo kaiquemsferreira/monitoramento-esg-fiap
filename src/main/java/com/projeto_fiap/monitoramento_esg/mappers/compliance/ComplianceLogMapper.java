@@ -8,31 +8,29 @@ import org.springframework.stereotype.Component;
 @Component
 public class ComplianceLogMapper {
 
-    public ComplianceLogDTO toDto(ComplianceLog entity) {
-        return ComplianceLogDTO
-                .builder()
-                .id(ObjectIdUtil.toString(entity.getId()))
-                .userId(ObjectIdUtil.toString(entity.getUserId()))
-                .action(entity.getAction())
-                .entity(entity.getEntity())
-                .entityId(entity.getEntityId())
-                .timestamp(entity.getTimestamp())
-                .notes(entity.getNotes())
-                .attachments(entity.getAttachments())
+    public ComplianceLogDTO toDto(ComplianceLog e) {
+        return ComplianceLogDTO.builder()
+                .id(ObjectIdUtil.toString(e.getId()))
+                .userId(e.getUserId())
+                .action(e.getAction())
+                .entity(e.getEntity())
+                .entityId(e.getEntityId())
+                .timestamp(e.getTimestamp())
+                .notes(e.getNotes())
+                .attachments(e.getAttachments())
                 .build();
     }
 
-    public ComplianceLog toEntity(ComplianceLogDTO dto) {
-        return ComplianceLog
-                .builder()
-                .id(ObjectIdUtil.parseOrNull(dto.getId()))
-                .userId(ObjectIdUtil.parseOrNull(dto.getUserId()))
-                .action(dto.getAction())
-                .entity(dto.getEntity())
-                .entityId(dto.getEntityId())
-                .timestamp(dto.getTimestamp())
-                .notes(dto.getNotes())
-                .attachments(dto.getAttachments())
+    public ComplianceLog toEntity(ComplianceLogDTO d) {
+        return ComplianceLog.builder()
+                .id(ObjectIdUtil.parseOrNull(d.getId()))
+                .userId(d.getUserId())
+                .action(d.getAction())
+                .entity(d.getEntity())
+                .entityId(d.getEntityId())
+                .timestamp(d.getTimestamp())
+                .notes(d.getNotes())
+                .attachments(d.getAttachments())
                 .build();
     }
 }

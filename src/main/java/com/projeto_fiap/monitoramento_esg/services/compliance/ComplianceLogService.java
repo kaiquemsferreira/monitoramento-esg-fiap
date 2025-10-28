@@ -21,10 +21,9 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class ComplianceLogService {
-
+    private final ComplianceLogRepository complianceLogRepository;
+    private final ComplianceLogMapper complianceLogMapper;
     private final MongoTemplate mongoTemplate;
-    private final ComplianceLogRepository repository;
-    private final ComplianceLogMapper mapper;
 
     public Page<ComplianceLogDTO> list(String action, String entity, String entityId, Pageable pageable) {
         List<Criteria> ands = new ArrayList<>();
@@ -41,30 +40,40 @@ public class ComplianceLogService {
         long total = mongoTemplate.count(q, ComplianceLog.class);
         List<ComplianceLogDTO> content = mongoTemplate.find(q, ComplianceLog.class)
                 .stream()
-                .map(mapper::toDto)
+                .map(complianceLogMapper::toDto)
                 .toList();
 
         return new PageImpl<>(content, pageable, total);
     }
 
     public ComplianceLogDTO get(String id) {
-        return repository.findById(id)
-                .map(mapper::toDto)
+        return complianceLogRepository.findById(id)
+                .map(complianceLogMapper::toDto)
                 .orElseThrow(() -> new ComplianceLogNotFoundException("ComplianceLog not found: " + id));
     }
 
     public ComplianceLogDTO create(ComplianceLogDTO input) {
-        ComplianceLog saved = mongoTemplate.save(mapper.toEntity(input));
-        return mapper.toDto(saved);
+        ComplianceLog saved = mongoTemplate.save(complianceLogMapper.toEntity(input));
+        return complianceLogMapper.toDto(saved);
     }
 
     public ComplianceLogDTO update(String id, ComplianceLogDTO input) {
-        input.setId(id);
-        ComplianceLog saved = mongoTemplate.save(mapper.toEntity(input));
-        return mapper.toDto(saved);
+        ComplianceLog existing = complianceLogRepository.findById(id)
+                .orElseThrow(() -> new ComplianceLogNotFoundException("ComplianceLog not found: " + id));
+
+        if (input.getUserId() != null)   existing.setUserId(input.getUserId());
+        if (input.getAction() != null)   existing.setAction(input.getAction());
+        if (input.getEntity() != null)   existing.setEntity(input.getEntity());
+        if (input.getEntityId() != null) existing.setEntityId(input.getEntityId());
+        if (input.getTimestamp() != null) existing.setTimestamp(input.getTimestamp());
+        if (input.getNotes() != null)    existing.setNotes(input.getNotes());
+        if (input.getAttachments() != null) existing.setAttachments(input.getAttachments());
+
+        ComplianceLog saved = mongoTemplate.save(existing);
+        return complianceLogMapper.toDto(saved);
     }
 
     public void delete(String id) {
-        repository.deleteById(id);
+        complianceLogRepository.deleteById(id);
     }
 }

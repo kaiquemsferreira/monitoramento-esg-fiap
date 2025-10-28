@@ -2,7 +2,6 @@ package com.projeto_fiap.monitoramento_esg.controllers.alert;
 
 import com.projeto_fiap.monitoramento_esg.models.dto.alert.AlertDTO;
 import com.projeto_fiap.monitoramento_esg.services.alert.AlertService;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -35,14 +34,12 @@ public class AlertController {
     }
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<AlertDTO> create(@Valid @RequestBody AlertDTO req) {
-        AlertDTO salvo = this.alertService.create(req);
-        return ResponseEntity.status(HttpStatus.CREATED).body(salvo);
+    public ResponseEntity<AlertDTO> create(@RequestBody AlertDTO req) {
+        return ResponseEntity.ok(this.alertService.create(req));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<AlertDTO> update(@PathVariable String id, @Valid @RequestBody AlertDTO req) {
+    public ResponseEntity<AlertDTO> update(@PathVariable String id, @RequestBody AlertDTO req) {
         AlertDTO alert = this.alertService.update(id, req);
         return ResponseEntity.status(HttpStatus.OK).body(alert);
     }

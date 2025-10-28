@@ -2,12 +2,12 @@ package com.projeto_fiap.monitoramento_esg.controllers.compliance;
 
 import com.projeto_fiap.monitoramento_esg.models.dto.compliance.ComplianceLogDTO;
 import com.projeto_fiap.monitoramento_esg.services.compliance.ComplianceLogService;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -31,14 +31,13 @@ public class ComplianceLogController {
     }
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public ComplianceLogDTO create(@Valid @RequestBody ComplianceLogDTO body) {
-        return this.complianceLogService.create(body);
+    public ResponseEntity<ComplianceLogDTO> create(@RequestBody ComplianceLogDTO body) {
+        return ResponseEntity.ok(this.complianceLogService.create(body));
     }
 
     @PutMapping("/{id}")
-    public ComplianceLogDTO update(@PathVariable String id, @Valid @RequestBody ComplianceLogDTO body) {
-        return this.complianceLogService.update(id, body);
+    public ResponseEntity<ComplianceLogDTO> update(@PathVariable String id, @RequestBody ComplianceLogDTO body) {
+        return ResponseEntity.ok(this.complianceLogService.update(id, body));
     }
 
     @DeleteMapping("/{id}")
