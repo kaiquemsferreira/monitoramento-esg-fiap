@@ -2,16 +2,17 @@ package com.projeto_fiap.monitoramento_esg.mappers.reading;
 
 import com.projeto_fiap.monitoramento_esg.models.dto.reading.ReadingDTO;
 import com.projeto_fiap.monitoramento_esg.models.entity.reading.Reading;
+import com.projeto_fiap.monitoramento_esg.utils.ObjectIdUtil;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ReadingMapper {
 
-    public ReadingDTO convertReadingToReadingDTO(Reading entity) {
+    public ReadingDTO toDto(Reading entity) {
         return ReadingDTO
                 .builder()
-                .id(entity.getId())
-                .sensorId(entity.getSensorId())
+                .id(ObjectIdUtil.toString(entity.getId()))
+                .sensorId(ObjectIdUtil.toString(entity.getSensorId()))
                 .ts(entity.getTs())
                 .kwh(entity.getKwh())
                 .metadata(entity.getMetadata())
@@ -20,11 +21,11 @@ public class ReadingMapper {
                 .build();
     }
 
-    public Reading convertReadingDTOToReading(ReadingDTO dto) {
+    public Reading toEntity(ReadingDTO dto) {
         return Reading
                 .builder()
-                .id(dto.getId())
-                .sensorId(dto.getSensorId())
+                .id(ObjectIdUtil.parseOrNull(dto.getId()))
+                .sensorId(ObjectIdUtil.parseOrNull(dto.getSensorId()))
                 .ts(dto.getTs())
                 .kwh(dto.getKwh())
                 .metadata(dto.getMetadata())

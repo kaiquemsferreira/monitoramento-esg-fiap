@@ -1,5 +1,6 @@
 package com.projeto_fiap.monitoramento_esg.models.entity.facility;
 
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,7 +16,7 @@ import java.util.List;
 @Document(collection = "facilities")
 public class Facility {
     @Id
-    private String id;
+    private ObjectId id;
     private String name;
     private Address address;
     private GeoJsonPoint location;

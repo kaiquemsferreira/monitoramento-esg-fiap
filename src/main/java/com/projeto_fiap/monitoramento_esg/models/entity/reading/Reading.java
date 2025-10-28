@@ -1,6 +1,7 @@
 package com.projeto_fiap.monitoramento_esg.models.entity.reading;
 
 import lombok.*;
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -12,8 +13,8 @@ import java.util.Map;
 @Document(collection = "readings")
 public class Reading {
     @Id
-    private String id;
-    private String sensorId;
+    private ObjectId id;
+    private ObjectId sensorId;
     private Instant ts;
     private Double kwh;
     private Map<String, Object> metadata;

@@ -2,6 +2,7 @@ package com.projeto_fiap.monitoramento_esg.mappers.facility;
 
 import com.projeto_fiap.monitoramento_esg.models.dto.facility.FacilityDTO;
 import com.projeto_fiap.monitoramento_esg.models.entity.facility.Facility;
+import com.projeto_fiap.monitoramento_esg.utils.ObjectIdUtil;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -10,7 +11,7 @@ public class FacilityMapper {
     public FacilityDTO convertFacilityToFacilityDTO(Facility entity) {
         return FacilityDTO
                 .builder()
-                .id(entity.getId())
+                .id(ObjectIdUtil.toString(entity.getId()))
                 .name(entity.getName())
                 .address(entity.getAddress())
                 .location(entity.getLocation())
@@ -23,7 +24,7 @@ public class FacilityMapper {
     public Facility convertFacilityDTOToFacility(FacilityDTO dto) {
         return Facility
                 .builder()
-                .id(dto.getId())
+                .id(ObjectIdUtil.parseOrNull(dto.getId()))
                 .name(dto.getName())
                 .address(dto.getAddress())
                 .location(dto.getLocation())

@@ -24,32 +24,32 @@ public class ReadingService {
         if (sensorId != null && !sensorId.isBlank()) {
             if (from != null && to != null) {
                 return this.readingRepository.findBySensorIdAndTsBetween(sensorId, from, to, pageable)
-                        .map(this.readingMapper::convertReadingToReadingDTO);
+                        .map(this.readingMapper::toDto);
             }
             return this.readingRepository.findBySensorId(sensorId, pageable)
-                    .map(this.readingMapper::convertReadingToReadingDTO);
+                    .map(this.readingMapper::toDto);
         }
         return this.readingRepository.findAll(pageable)
-                .map(this.readingMapper::convertReadingToReadingDTO);
+                .map(this.readingMapper::toDto);
     }
 
     public ReadingDTO get(String id) {
         return this.readingRepository.findById(id)
-                .map(readingMapper::convertReadingToReadingDTO)
+                .map(readingMapper::toDto)
                 .orElseThrow(() -> new ReadingNotFoundException(FACILITY_NOT_FOUND_WITH_ID + id));
     }
 
     public ReadingDTO create(ReadingDTO input) {
-        Reading reading = this.readingMapper.convertReadingDTOToReading(input);
+        Reading reading = this.readingMapper.toEntity(input);
         Reading savedReading = this.readingRepository.save(reading);
-        return this.readingMapper.convertReadingToReadingDTO(savedReading);
+        return this.readingMapper.toDto(savedReading);
     }
 
     public ReadingDTO update(String id, ReadingDTO input) {
         input.setId(id);
-        Reading reading = this.readingMapper.convertReadingDTOToReading(input);
+        Reading reading = this.readingMapper.toEntity(input);
         Reading savedReading = this.readingRepository.save(reading);
-        return this.readingMapper.convertReadingToReadingDTO(savedReading);
+        return this.readingMapper.toDto(savedReading);
     }
 
     public void delete(String id) {

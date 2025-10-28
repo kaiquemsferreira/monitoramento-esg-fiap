@@ -41,7 +41,7 @@ public class ComplianceLogService {
         long total = mongoTemplate.count(q, ComplianceLog.class);
         List<ComplianceLogDTO> content = mongoTemplate.find(q, ComplianceLog.class)
                 .stream()
-                .map(mapper::convertComplianceLogToComplianceLogDTO)
+                .map(mapper::toDto)
                 .toList();
 
         return new PageImpl<>(content, pageable, total);
@@ -49,19 +49,19 @@ public class ComplianceLogService {
 
     public ComplianceLogDTO get(String id) {
         return repository.findById(id)
-                .map(mapper::convertComplianceLogToComplianceLogDTO)
+                .map(mapper::toDto)
                 .orElseThrow(() -> new ComplianceLogNotFoundException("ComplianceLog not found: " + id));
     }
 
     public ComplianceLogDTO create(ComplianceLogDTO input) {
-        ComplianceLog saved = mongoTemplate.save(mapper.convertComplianceLogDTOToComplianceLog(input));
-        return mapper.convertComplianceLogToComplianceLogDTO(saved);
+        ComplianceLog saved = mongoTemplate.save(mapper.toEntity(input));
+        return mapper.toDto(saved);
     }
 
     public ComplianceLogDTO update(String id, ComplianceLogDTO input) {
         input.setId(id);
-        ComplianceLog saved = mongoTemplate.save(mapper.convertComplianceLogDTOToComplianceLog(input));
-        return mapper.convertComplianceLogToComplianceLogDTO(saved);
+        ComplianceLog saved = mongoTemplate.save(mapper.toEntity(input));
+        return mapper.toDto(saved);
     }
 
     public void delete(String id) {

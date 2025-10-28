@@ -2,16 +2,17 @@ package com.projeto_fiap.monitoramento_esg.mappers.compliance;
 
 import com.projeto_fiap.monitoramento_esg.models.dto.compliance.ComplianceLogDTO;
 import com.projeto_fiap.monitoramento_esg.models.entity.compliance.ComplianceLog;
+import com.projeto_fiap.monitoramento_esg.utils.ObjectIdUtil;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ComplianceLogMapper {
 
-    public ComplianceLogDTO convertComplianceLogToComplianceLogDTO(ComplianceLog entity) {
+    public ComplianceLogDTO toDto(ComplianceLog entity) {
         return ComplianceLogDTO
                 .builder()
-                .id(entity.getId())
-                .userId(entity.getUserId())
+                .id(ObjectIdUtil.toString(entity.getId()))
+                .userId(ObjectIdUtil.toString(entity.getUserId()))
                 .action(entity.getAction())
                 .entity(entity.getEntity())
                 .entityId(entity.getEntityId())
@@ -21,11 +22,11 @@ public class ComplianceLogMapper {
                 .build();
     }
 
-    public ComplianceLog convertComplianceLogDTOToComplianceLog(ComplianceLogDTO dto) {
+    public ComplianceLog toEntity(ComplianceLogDTO dto) {
         return ComplianceLog
                 .builder()
-                .id(dto.getId())
-                .userId(dto.getUserId())
+                .id(ObjectIdUtil.parseOrNull(dto.getId()))
+                .userId(ObjectIdUtil.parseOrNull(dto.getUserId()))
                 .action(dto.getAction())
                 .entity(dto.getEntity())
                 .entityId(dto.getEntityId())
